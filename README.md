@@ -4,6 +4,9 @@ Sample project for parsing paragraphs.
 Tests can be found at:
 `src/test/java/com/paragraphparser/service/ParserServiceTest.java`
 
+Algorithm can be found at:
+`src/main/java/com/paragraphparser/service/ParserServiceImpl.java`
+
 # Algorithm Complexity
 Currently uses a counting sort algorithm to count the frequency of
 each letter with one loop through the paragraph (size N). To create the sorted

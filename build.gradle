@@ -3,18 +3,26 @@ buildscript {
         springBootVersion = '2.1.2.RELEASE'
     }
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1")
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
+apply plugin: 'application'
+
 
 group = 'com.paragraphparser'
+mainClassName = 'com.paragraphparser.ParserApplication'
 sourceCompatibility = 1.8
 
 repositories {
@@ -27,6 +35,12 @@ dependencies {
     compile("io.springfox:springfox-swagger2:2.9.2")
     compile("io.springfox:springfox-swagger-ui:2.9.2")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+docker {
+    name "${group}/${rootProject.name}:latest"
+    dockerfile file('Dockerfile')
+    files tasks.distTar.outputs
 }
 
 bootRun {

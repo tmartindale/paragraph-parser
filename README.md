@@ -27,3 +27,7 @@ output, another loop through the range of the character set (size K) is needed.
 2. Access via curl or Swagger UI
 - `curl -X POST localhost:8080/parse -d "example" -H "Content-Type: text/plain"`
 - `http://localhost:8080/swagger-ui.html`
+
+# Docker
+1. Build the docker image: `./gradlew docker`
+2. Run the docker container: `docker run -d -p "8080:8080" com.paragraphparser/paragraph-parser:latest`

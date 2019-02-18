@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
@@ -21,17 +22,21 @@ public class ParserCommandLineRunner implements CommandLineRunner {
     private ParserService parserService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (args != null && args.length > 0) {
             String resourcePath = args[0];
 
-            FileInputStream inputStream = new FileInputStream(resourcePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            try {
+                FileInputStream inputStream = new FileInputStream(resourcePath);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String input = reader.lines().collect(Collectors.joining("\n"));
+                String input = reader.lines().collect(Collectors.joining("\n"));
 
-            String result = parserService.parse(input);
-            LOG.info("Result: {}", result);
+                String result = parserService.parse(input);
+                LOG.info("Result: {}", result);
+            } catch (FileNotFoundException e) {
+                LOG.error("File {} not found.", resourcePath);
+            }
         }
     }
 

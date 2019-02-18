@@ -21,3 +21,9 @@ output, another loop through the range of the character set (size K) is needed.
 
 # Run Tests
 `./gradlew test`
+
+# API
+1. `./gradlew bootrun`
+2. Access via curl or Swagger UI
+- `curl -X POST localhost:8080/parse -d "example" -H "Content-Type: text/plain"`
+- `http://localhost:8080/swagger-ui.html`

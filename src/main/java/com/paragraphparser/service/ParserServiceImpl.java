@@ -38,19 +38,22 @@ public class ParserServiceImpl implements ParserService {
         // Loop over each char in the String
         // Convert them to ints to get the ascii value
         // Increase the appropriate letter's index by 1
+        int totalLetters = 0;
         for (char lineChar : line.toCharArray()) {
             int ascii = (int) lineChar;
 
             if (ascii >= 97 && ascii <= 122) {
                 // a - z chars have an ascii value of 97 - 122
                 letterCount[getCountIndex(ascii, LOWERCASE_OFFSET)]++;
+                totalLetters++;
             } else if (ascii >= 65 && ascii <= 90) {
                 // A - Z chars have an ascii value of 65 - 90
                 letterCount[getCountIndex(ascii, UPPERCASE_OFFSET)]++;
+                totalLetters++;
             }
         }
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(totalLetters);
         // Loop over the letter counts to reconstruct the line in order
         for (int i = 0; i < LETTERS; i++) {
             if (letterCount[i] > 0) {

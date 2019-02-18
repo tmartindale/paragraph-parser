@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Component
 public class ParserCommandLineRunner implements CommandLineRunner {
@@ -27,7 +28,10 @@ public class ParserCommandLineRunner implements CommandLineRunner {
             FileInputStream inputStream = new FileInputStream(resourcePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            reader.lines().forEach(arg -> parserService.parse(arg));
+            String input = reader.lines().collect(Collectors.joining("\n"));
+
+            String result = parserService.parse(input);
+            LOG.info("Result: {}", result);
         }
     }
 

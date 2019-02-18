@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 public class ParserServiceTest {
@@ -33,8 +32,18 @@ public class ParserServiceTest {
     }
 
     @Test
+    public void shouldParseBackwardsUpperCase() {
+        String input = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+        String expected = "abcdefghijklmnopqrstuvwxyz";
+
+        String result = parserService.parse(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void shouldParseSpacesAndSpecialCase() {
-        String input = "! @ # $ % & * ( \n ) _ + 1 2";
+        String input = "! @ # $ % & * \\ \b ( \n ) _ + 1 2 ≈ßå¬∂ƒ∫øœƒ";
         String expected = "";
 
         String result = parserService.parse(input);
